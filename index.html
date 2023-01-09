@@ -5,28 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>API eindproject</title>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap-reboot.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap-grid.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap-grid.min.css">
 
 </head>
 <body>
 <div class="row">
-    <div class="container justify-content-center">
-        <h1>Welcome</h1>
-        <form action="javascript:getToken()">
-            <div class="icon-input">
-                <input type="email" id="email-input" class="input" placeholder="Email">
-            </div>
-            <div class="icon-input">
-                <input type="password" id="password-input" class="input" placeholder="Password">
-            </div>
-            <button type="submit" class="login">Login</button>
-        </form>
-        <p class="grey center">Have no account yet?</p>
-        <button type="button"  onclick="window.location='register.html';" class="register" id="registerbutton">Register</button>
-        </form>
+    <div class="m-5">
+        <h1>Make your user</h1>
+        <h2>currently unavailable</h2>
+        <div x-data="{
+        responsedata: null,
+        email: null,
+        password: null,
+        async callmethod1() {
+            this.responsedata = await (await fetch('https://api-eindproject-tvanloy.cloud.okteto.net/users/',
+            {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: this.email,
+                    password: this.password,
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })).json();
+        },
+    }">
+            <input type="text" x-model="email">
+            <input type="password" x-model="password">
+            <button x-on:click="callmethod1">create</button>
+        </div>
+        <a href="token.html">create token</a>
     </div>
 </div>
-
 </body>
 </html>
