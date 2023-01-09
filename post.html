@@ -3,9 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Title</title>
+    <title>API eindproject</title>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap-grid.min.css">
+
 </head>
 <body>
-
+<div class="row">
+    <div class="m-5">
+        <h1>Make a post</h1>
+        <div x-data="{
+        data: null,
+        name: null,
+        quote: null,
+        user_id: null,
+        async post() {
+            this.data = await (await fetch('https://api-eindproject-tvanloy.cloud.okteto.net/users/'+ this.user_id + '/posts/',
+            {
+                method: 'POST',
+                body: JSON.stringify({
+                    name: this.name,
+                    quote: this.quote,
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })).json();
+        },
+    }">
+            <input type="text" placeholder="user id" x-model="user_id">
+            <input type="text" placeholder="name" x-model="name">
+            <input type="text" placeholder="quote"  x-model="quote">
+            <button x-on:click="post">create</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
