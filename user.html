@@ -4,8 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>user</title>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap-grid.min.css">
 </head>
 <body>
-<h1>user</h1>
+<div class="sidenav">
+    <a href="index.html">Create Order</a>
+    <a href="checkorder.html">View Order</a>
+    <a href="orders.html">All Orders</a>
+</div>
+<div class="main">
+    <h4>get info about a </h4>
+    <div x-data="{
+        responsedata: null,
+        user_id: null,
+        async getData() {
+            this.responsedata = await (await fetch('https://api-eindproject-tvanloy.cloud.okteto.net/users/' + this.user_id)).json();
+        }
+    }">
+        <input type="text" x-model="user_id" placeholder="user id">
+        <button x-on:click="getData">Get Information</button>
+        <br><br>
+        email: <strong x-text="responsedata.email"></strong><br>
+        id: <strong x-text="responsedata.id"></strong><br>
+        active: <strong x-text="responsedata.is_active"></strong>
+</div>
 </body>
 </html>
