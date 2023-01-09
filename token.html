@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>API eindproject</title>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap-grid.min.css">
+
+</head>
+<body>
+<div class="row">
+    <div class="m-5">
+        <h1>get your token</h1>
+        <h3>give email and password</h3>
+        <div x-data="{
+        email: null,
+        password: null,
+        token: null,
+        async getToken() {
+           const paramsObj = {grant_type: '', username: this.email, password: this.password, scope: '', client_secret:''};
+           const searchParams = new URLSearchParams(paramsObj);
+           this.token = await (await fetch('https://api-eindproject-tvanloy.cloud.okteto.net/token',
+           {
+            method: 'POST',
+            body: searchParams,
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded',
+                'accept': 'application/json' ,
+            },
+            })).json();
+            console.log(this.token);
+        }
+    }">
+            <input type="text" x-model="email">
+            <input type="password" x-model="password">
+            <button x-on:click="getToken">get token</button>
+            <p x-text="token.access_token"></p>
+        </div>
+        <p>DONT FORGET TO COPY THE TOKEN!!</p>
+        <a href="homepage.html">homepage</a>
+    </div>
+</div>
+</body>
+</html>
