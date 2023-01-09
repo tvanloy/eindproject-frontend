@@ -3,9 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Title</title>
+    <title>user</title>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap-grid.min.css">
 </head>
 <body>
+<div class="sidenav">
+    <a href="index.html">Create Order</a>
+    <a href="checkorder.html">View Order</a>
+    <a href="orders.html">All Orders</a>
+</div>
+<div class="main">
+    <h4>get a quote </h4>
+    <div x-data="{
+        responsedata: null,
+        quote_id: null,
+        async getData() {
+            this.responsedata = await (await fetch('https://api-eindproject-tvanloy.cloud.okteto.net/quotes/' + this.quote_id)).json();
+        }
+    }">
+        <input type="text" x-model="quote_id" placeholder="user id">
+        <button x-on:click="getData">get quote</button>
+        <br><br>
+        name: <strong x-text="responsedata.name"></strong><br>
+        quote: <strong x-text="responsedata.quote"></strong><br>
+        quote id: <strong x-text="responsedata.id"></strong><br>
+        owner id: <strong x-text="responsedata.owner_id"></strong>
 
+    </div>
 </body>
 </html>
