@@ -18,7 +18,7 @@ async function Reg(){
         })).json();
     if (!this.responsedata["detail"]){
         console.log("Login Succesfull")
-        window.location.href = "https://api-eindproject.netlify.app/index.html";
+        window.location.href = "https://eindproject-tristan.netlify.app/index.html";
         alert("Account has been created, please login.")
     }
     else {
