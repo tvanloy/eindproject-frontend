@@ -4,8 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Title</title>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap-grid.min.css">
 </head>
 <body>
-
+<h1>get users</h1>
+<nav>
+    <a href="token.html">get token</a>
+</nav>
+<hr>
+<div x-data="{
+        data: null,
+        input: null,
+        async users() {
+            this.data = await (await fetch('https://api-eindproject-tvanloy.cloud.okteto.net/users/',
+            {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + this.input,
+                },
+            })).json();
+            console.log(this.data)
+        },
+    }">
+    <label>token:</label><input type="text" x-model="input"><br>
+    <button x-on:click="users">get users</button>
+    <br><br>
+    <table>
+        <thead>
+        <tr>
+            <th>email</th>
+            <th>id</th>
+            <th>active</th>
+        </tr>
+        </thead>
+        <tbody>
+        <template x-for="users in data">
+            <tr>
+                <td x-text="users.email"></td>
+                <td x-text="users.id"></td>
+                <td x-text="users.is_active"></td>
+            </tr>
+        </template>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
