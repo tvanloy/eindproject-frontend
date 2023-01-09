@@ -4,8 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Title</title>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap-grid.min.css">
 </head>
 <body>
-
+<h1>get quotes</h1>
+<nav>
+    <a href="token.html">get token</a>
+</nav>
+<hr>
+<div x-data="{
+        data: null,
+        async quotes() {
+            this.data = await (await fetch('https://api-eindproject-tvanloy.cloud.okteto.net/quotes/',
+            {
+                method: 'GET',
+            })).json();
+            console.log(this.data)
+        },
+    }">
+    <button x-on:click="quotes">get quotes</button>
+    <br><br>
+    <table>
+        <thead>
+        <tr>
+            <th>name</th>
+            <th>quote</th>
+            <th>id</th>
+            <th>owner id</th>
+        </tr>
+        </thead>
+        <tbody>
+        <template x-for="quotes in data">
+            <tr>
+                <td x-text="quotes.name"></td>
+                <td x-text="quotes.quote"></td>
+                <td x-text="quotes.id"></td>
+                <td x-text="quotes.owner_id"></td>
+            </tr>
+        </template>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
